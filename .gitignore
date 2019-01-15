@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Large files
+X_dev.npy
+X.npy
+
 # C extensions
 *.so
 
