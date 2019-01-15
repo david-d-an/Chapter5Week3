@@ -5,7 +5,13 @@ from tqdm import tqdm
 from babel.dates import format_date
 from keras.utils import to_categorical
 import keras.backend as K
+
+import matplotlib
+matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import imshow
+matplotlib.pyplot.ion()
+
 
 fake = Faker()
 fake.seed(12345)

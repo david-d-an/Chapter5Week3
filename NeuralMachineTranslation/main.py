@@ -86,7 +86,6 @@ def translation_model(Tx, Ty, n_a, n_s, human_vocab_size, machine_vocab_size):
     Returns:
     model -- Keras model instance
     """
-    
     # Define the inputs of your model with a shape (Tx,)
     # Define s0 and c0, initial hidden state for the decoder LSTM of shape (n_s,)
     X = Input(shape=(Tx, human_vocab_size))
@@ -94,38 +93,28 @@ def translation_model(Tx, Ty, n_a, n_s, human_vocab_size, machine_vocab_size):
     c0 = Input(shape=(n_s,), name='c0')
     s = s0
     c = c0
-    
     # Initialize empty list of outputs
     outputs = []
-    
     ### START CODE HERE ###
-    
     # Step 1: Define your pre-attention Bi-LSTM. Remember to use return_sequences=True. (≈ 1 line)
     a = Bidirectional(LSTM(n_a, return_sequences=True))(X)
     #a = Bidirectional(LSTM(n_a, return_sequences=True), input_shape=(m,Tx,2*n_a))(X)
-
     # Step 2: Iterate for Ty steps
     for t in range(Ty):
-    
         # Step 2.A: Perform one step of the attention mechanism to get back the context vector at step t (≈ 1 line)
         context = one_step_attention(a, s)
-        
         # Step 2.B: Apply the post-attention LSTM cell to the "context" vector.
         # Don't forget to pass: initial_state = [hidden state, cell state] (≈ 1 line)
         s, _, c = post_activation_LSTM_cell(context, initial_state=[s,c])
-        
         # Step 2.C: Apply Dense layer to the hidden state output of the post-attention LSTM (≈ 1 line)
         out = output_layer(s)
-        
         # Step 2.D: Append "out" to the "outputs" list (≈ 1 line)
         outputs.append(out)
-    
     # Step 3: Create model instance taking three inputs and returning the list of outputs. (≈ 1 line)
     model = Model(inputs=[X,s0,c0], outputs=outputs)
-
     ### END CODE HERE ###
-    
     return model
+
 
 
 
@@ -180,5 +169,5 @@ def mainfunc():
 
     model.summary()
 
-    # attention_map = plot_attention_map(model, human_vocab, inv_machine_vocab, "Tuesday 09 Oct 1993", num = 7, n_s = 64)
+    attention_map = plot_attention_map(model, human_vocab, inv_machine_vocab, "Tuesday 09 Oct 1993", num = 7, n_s = 64)
 
