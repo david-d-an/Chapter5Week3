@@ -3,7 +3,10 @@ from td_utils import *
 
 def practicefunc():
 
+    plt.figure()
     x = graph_spectrogram("audio_examples/example_train.wav")
+    plt.show(block=False)
+
     _, data = wavfile.read("audio_examples/example_train.wav")
     print("Time steps in audio recording before spectrogram", data[:,0].shape)
     print("Time steps in input after spectrogram", x.shape)
