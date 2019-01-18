@@ -158,8 +158,9 @@ def mainfunc():
 
     EXAMPLES = ['3 May 1979', '5 April 09', '21th of August 2016', 'Tue 10 Jul 2007', 'Saturday May 9 2018', 'March 3 2001', 'March 3rd 2001', '1 March 2001']
     for example in EXAMPLES:
-        source = [string_to_int(example, Tx, human_vocab)]
+        # source = string_to_int(example, Tx, human_vocab)
         # source = np.array(list(map(lambda x: to_categorical(x, num_classes=len(human_vocab)), source))).swapaxes(0,1)
+        source = [string_to_int(example, Tx, human_vocab)]
         source = np.array(list(map(lambda x: to_categorical(x, num_classes=len(human_vocab)), source)))
         prediction = model.predict([source, s0, c0])
         prediction = np.argmax(prediction, axis = -1)
